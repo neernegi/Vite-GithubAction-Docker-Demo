@@ -63,23 +63,23 @@ jobs:
       - name: Push Docker image
         run: docker push ${{secrets.DOCKERHUB_USERNAME}}/vitedocker-app:latest
 
-  deploy-render:
-    name: Deploy to Render
-    needs: deploy-docker
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+  # deploy-render:
+  #   name: Deploy to Render
+  #   needs: deploy-docker
+  #   runs-on: ubuntu-latest
+  #   if: github.ref == 'refs/heads/main'
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Deploy to Render
-        uses: JorgeLNJunior/render-deploy@v1.4.3
-        with:
-          service_id: ${{ secrets.RENDER_SERVICE_ID }}
-          api_key: ${{ secrets.RENDER_API_KEY }}
-          wait_deploy: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Deploy to Render
+  #       uses: JorgeLNJunior/render-deploy@v1.4.3
+  #       with:
+  #         service_id: ${{ secrets.RENDER_SERVICE_ID }}
+  #         api_key: ${{ secrets.RENDER_API_KEY }}
+  #         wait_deploy: true
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
 
 
 
