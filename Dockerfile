@@ -2,6 +2,8 @@ FROM node:20
 
 WORKDIR /myApp
 
+COPY package*.json ./
+
 COPY . .
 
 
