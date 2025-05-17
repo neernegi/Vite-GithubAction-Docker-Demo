@@ -21,14 +21,10 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: |
-          cd client
-          npm ci
+        run: npm ci
 
       - name: Run lint
-        run: |
-          cd client
-          npm run lint
+        run: npm run lint
 
   build:
     name: Build App
@@ -46,7 +42,6 @@ jobs:
 
       - name: Build Vite React App
         run: |
-          cd client
           npm ci
           npm run build
 
@@ -63,14 +58,14 @@ jobs:
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Build and tag Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/vitedocker-app:latest ./client
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/vitedocker-app:latest .
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/vitedocker-app:latest
 
   deploy-render:
     name: Deploy to Render
-    needs: build
+    needs: deploy-docker
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
